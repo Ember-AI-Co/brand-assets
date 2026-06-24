@@ -54,7 +54,6 @@ PEOPLE = [
         "slug": "richard-moore",
         "name": "Richard Moore",
         "title": "Director",
-        "phone": "07 3808 9917",
         "mobile": "[redacted]",
         "email": "richard@emberai.ai",
         "web": "www.emberai.com.au",
