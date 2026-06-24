@@ -1,0 +1,10 @@
+# Build scratch
+.flame.b64
+.render.py
+.logo.html
+.logo_raw.png
+.preview.html
+.preview.png
+tools/.logo.html
+tools/.logo_raw.png
+.DS_Store
