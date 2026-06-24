@@ -47,33 +47,16 @@ DISCLAIMER = (
 FONT = "Arial, Helvetica, sans-serif"
 
 # ---- People ----------------------------------------------------------------
-# Required: name, title, email, web, web_url, slug
-# Optional: phone, mobile, address1, address2
-PEOPLE = [
-    {
-        "slug": "richard-moore",
-        "name": "Richard Moore",
-        "title": "Director",
-        "mobile": "[redacted]",
-        "email": "richard@emberai.ai",
-        "web": "www.emberai.com.au",
-        "web_url": "https://www.emberai.com.au",
-        "address1": "21 Godwin Street",
-        "address2": "Bulimba QLD 4171",
-    },
-    {
-        "slug": "melissa-davin",
-        "name": "Melissa Davin",
-        "title": "Director",
-        # Mel: mobile only, no landline.
-        "mobile": "[redacted]",
-        "email": "melissa@emberai.ai",
-        "web": "www.emberai.com.au",
-        "web_url": "https://www.emberai.com.au",
-        "address1": "21 Godwin Street",
-        "address2": "Bulimba QLD 4171",
-    },
-]
+# Real team data (names + personal mobiles) is NOT committed — it lives in the
+# gitignored signatures/people.json (see signatures/people.example.json for the
+# format). This keeps personal numbers out of the public repo.
+#
+# Resolution order: CLI arg JSON > signatures/people.json > this PEOPLE list.
+#
+# Per-person fields:
+#   Required: slug, name, title, email, web, web_url
+#   Optional: phone, mobile, address1, address2
+PEOPLE = []
 
 
 def _tel_href(num: str) -> str:
@@ -153,10 +136,20 @@ def build_page(p: dict, sig: str) -> str:
 
 
 def main():
-    people = PEOPLE
+    cfg = os.path.join(os.path.dirname(os.path.abspath(__file__)), "people.json")
     if len(sys.argv) > 1:
         with open(sys.argv[1]) as f:
             people = json.load(f)
+    elif os.path.exists(cfg):
+        with open(cfg) as f:
+            people = json.load(f)
+    else:
+        people = PEOPLE
+
+    if not people:
+        print("  No people configured. Create signatures/people.json "
+              "(copy signatures/people.example.json) and re-run.")
+        return
 
     os.makedirs(OUT_DIR, exist_ok=True)
     for p in people:

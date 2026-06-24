@@ -1,3 +1,7 @@
+# Personal team data + generated signatures — keep out of the public repo
+signatures/people.json
+signatures/out/
+
 # Build scratch
 .flame.b64
 .render.py

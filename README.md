@@ -20,13 +20,19 @@ https://ember-ai-co.github.io/brand-assets/assets/<file>
 ## Email signatures
 
 `signatures/generate.py` stamps out brand-consistent HTML signatures for the
-whole team from one template. Edit the `PEOPLE` list and run:
+whole team from one template.
+
+Real team data (names + personal mobiles) is **not** committed — it lives in
+the gitignored `signatures/people.json`. Copy the format from
+`signatures/people.example.json`, then run:
 
 ```bash
 python3 signatures/generate.py
 ```
 
-Output lands in `signatures/out/<slug>.html` — one ready-to-install file each.
+Resolution order: CLI arg JSON > `signatures/people.json` > built-in (empty).
+Output lands in the gitignored `signatures/out/<slug>.html` — one
+ready-to-install file each (kept local, not pushed to this public repo).
 
 **To install:** open the `.html` file in a browser → Select-All (⌘A / Ctrl-A) →
 Copy → paste into your mail client's signature editor.
