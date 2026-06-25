@@ -79,7 +79,13 @@ def contact_row(label: str, value: str, href: str) -> str:
 
 def build_signature(p: dict) -> str:
     name = html.escape(p["name"])
-    title = html.escape(p["title"]).upper()
+    title_row = ""
+    if p.get("title"):
+        title_row = (
+            f'<tr><td style="padding:0 0 6px 0;font-family:{FONT};font-size:11px;'
+            f'font-weight:bold;color:{EMBER_DARK};letter-spacing:2px;">'
+            f'{html.escape(p["title"]).upper()}</td></tr>'
+        )
 
     address_rows = ""
     for key in ("address1", "address2"):
@@ -99,8 +105,8 @@ def build_signature(p: dict) -> str:
 
     # The signature itself: a single presentation table, all-inline styles.
     return f"""<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#ffffff;">
-  <tr><td style="padding:0 0 2px 0;font-family:{FONT};font-size:20px;font-weight:bold;color:{INK};line-height:24px;">{name}</td></tr>
-  <tr><td style="padding:0 0 6px 0;font-family:{FONT};font-size:11px;font-weight:bold;color:{EMBER_DARK};letter-spacing:2px;">{title}</td></tr>
+  <tr><td style="padding:0 0 6px 0;font-family:{FONT};font-size:20px;font-weight:bold;color:{INK};line-height:24px;">{name}</td></tr>
+  {title_row}
   <tr><td style="padding:0 0 12px 0;">{address_rows}</td></tr>
   <tr><td style="padding:0 0 12px 0;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="480" style="border-collapse:collapse;table-layout:fixed;">
